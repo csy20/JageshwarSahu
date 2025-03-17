@@ -1,7 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Github, Instagram, Twitter, Phone, Mail, Share2 } from 'lucide-react';
+// Try different import approaches or remove if not working
+// import profileImage from './assets/profile.png'; 
 
 function App() {
+  const [imgError, setImgError] = useState(false);
+  
+  // Define multiple possible image sources to try
+  const profileImageSrc = imgError 
+    ? "https://via.placeholder.com/400x400?text=Jaggeshwar+Sahu" 
+    : process.env.PUBLIC_URL + '/profile.png';
+    
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white">
       {/* Hero Section */}
@@ -10,9 +19,13 @@ function App() {
           {/* Profile Image */}
           <div className="w-64 h-64 md:w-96 md:h-96 relative">
             <img
-              src="/profile.jpg"
+              src={profileImageSrc}
               alt="Jaggeshwar Sahu"
               className="rounded-2xl shadow-2xl object-cover w-full h-full"
+              onError={(e) => {
+                console.error("Image failed to load");
+                setImgError(true);
+              }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-2xl"></div>
           </div>
